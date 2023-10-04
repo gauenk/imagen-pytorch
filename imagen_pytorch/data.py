@@ -67,7 +67,7 @@ class Collator:
 
         if len(texts) == 0:
             return None
-        
+
         texts = pad_sequence(texts, True)
 
         newbatch = []
@@ -117,7 +117,15 @@ class Dataset(Dataset):
 
     def __getitem__(self, index):
         path = self.paths[index]
-        img = Image.open(path)
+        # -- read --
+        img = Image.open(path).convert("RGB")
+
+        # -- shrink by half --
+        shrink = 0.5
+        width = int(img.size[0] * shrink)
+        height = int(img.size[1] * shrink)
+        img = img.resize((width,height), Image.Resampling.BILINEAR)
+
         return self.transform(img)
 
 def get_images_dataloader(

@@ -38,8 +38,10 @@ def sample(
 ):
     model_path = Path(model)
     full_model_path = str(model_path.resolve())
+    print(full_model_path)
     assert model_path.exists(), f'model not found at {full_model_path}'
     loaded = torch.load(str(model_path))
+    print("loaded: ",loaded)
 
     # get version
 
